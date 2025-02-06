@@ -120,3 +120,25 @@ class ChocolatespiderSpider(scrapy.Spider):
 ```
 
 the parse function is what is actually ran as you get a spider to work.
+
+
+The parse function is what is actually ran as you get a spider to work, now, using the same syntax used in the scrapy shell, we can start to fill our parse function with the actual info.
+
+
+```python
+def parse(self, response):  
+
+	products = response.css('product-item')  
+
+	for product in products:
+
+		yield{
+
+			'name' : product.css('a.product-item-meta__title::text').get(),
+
+			'price' : product.css('span.price').get().replace('<span class="price">\n <span class="visually-hidden">Sale price</span>£', '').replace('</span>', ''),
+
+			'url' : product.css('a.product-item-meta__title').attrib['href']
+
+		}
+```
