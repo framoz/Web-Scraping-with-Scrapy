@@ -3,8 +3,8 @@ import scrapy
 
 class ChocolatespiderSpider(scrapy.Spider):
     name = "chocolatespider"
-    allowed_domains = ["chocolate.co.uk"]
-    start_urls = ["https://chocolate.co.uk/collections/all"]
+   
+    start_urls = ['https://chocolate.co.uk/collections/all']
 
     def parse(self, response):
 
@@ -14,7 +14,7 @@ class ChocolatespiderSpider(scrapy.Spider):
                         
             yield{
                 'name' : product.css('a.product-item-meta__title::text').get(),
-                'price' : product.css('span.price').get().replace('<span class="price">\n              <span class="visually-hidden">Sale price</span>£', '').replace('</span>'),
+                'price' : product.css('span.price').get().replace('<span class="price">\n              <span class="visually-hidden">Sale price</span>£', '').replace('</span>', ''),
                 'url' : product.css('a.product-item-meta__title').attrib['href']
             }
         
