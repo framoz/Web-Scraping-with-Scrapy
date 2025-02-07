@@ -142,3 +142,12 @@ def parse(self, response):
 
 		}
 ```
+After this, we can check if there is a next button and then call the parse method again
+
+```python
+        if next_page is not None:
+            next_page_url = 'https://chocolate.co.uk' + next_page
+            yield response.follow(next_page_url, callback=self.parse)
+```
+
+With that, it is already possible to make basic scraping on some websites.
